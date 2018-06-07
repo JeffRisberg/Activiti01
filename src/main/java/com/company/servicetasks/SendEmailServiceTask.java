@@ -9,5 +9,4 @@ public class SendEmailServiceTask implements JavaDelegate {
         //logic to send email confirmation
         System.out.println("Sending email now");
     }
-
 }
