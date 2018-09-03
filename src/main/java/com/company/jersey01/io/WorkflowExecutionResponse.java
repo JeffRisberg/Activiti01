@@ -35,7 +35,7 @@ public class WorkflowExecutionResponse {
     private String processCompletionMessage;
 
     // Input params from next task in workflow
-    //private TaskInputParams taskInputParams;
+    private TaskInputParams taskInputParams;
 
     //public String json() {
     //    return new Gson().toJson(this);

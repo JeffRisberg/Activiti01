@@ -2,6 +2,7 @@ package com.company.jersey01.factory;
 
 import com.company.jersey01.ContextualWorkflowDriverImpl;
 import com.company.jersey01.WorkflowDriver;
+import com.company.jersey01.services.WorkflowService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.*;
@@ -23,7 +24,7 @@ public class WorkflowFactory {
   private static WorkflowDriver workflowDriver;
 
    // Workflow Controller
-  private static WorkflowController workflowController;
+  private static WorkflowService workflowController;
 
   static {
     log.info("Initializing ProcessEngine Creation...");
@@ -42,9 +43,9 @@ public class WorkflowFactory {
     log.info("WorkflowDriver initialized.");
   }
 
-  public static WorkflowController getWorkflowController() {
+  public static WorkflowService getWorkflowController() {
     if(workflowController == null)
-      workflowController = new WorkflowController();
+      workflowController = new WorkflowService();
 
     return workflowController;
   }

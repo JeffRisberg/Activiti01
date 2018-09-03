@@ -1,7 +1,9 @@
 package com.company.jersey01;
 
+import com.company.jersey01.io.TaskInputParam;
+import com.company.jersey01.io.TaskInputParams;
 import com.company.jersey01.io.WorkflowExecutionResponse;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.*;
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.company.jersey01.WorkflowConstants.USER_INPUT_VALID;
 
 /**
  * This implementation of Workflow Driver - takes input from 'Context' and feeds into Workflow
@@ -139,13 +143,13 @@ public class ContextualWorkflowDriverImpl implements WorkflowDriver {
       .list();
     StringBuilder sb = new StringBuilder();
     taskList.stream().forEach(historicTaskInstance -> {
-      sb.append(new Gson().toJson(historicTaskInstance));
+      //sb.append(new Gson().toJson(historicTaskInstance));
       sb.append("\r\n");
     });
 
     WorkflowExecutionResponse response = WorkflowExecutionResponse.builder().tenantId(tenantId)
       .processInstanceId(processInstanceId).statusDetail(sb.toString()).build();
-    log.info("WorkflowExecution processInstanceId: {} response: {}", processInstanceId, response.json());
+    //log.info("WorkflowExecution processInstanceId: {} response: {}", processInstanceId, response.json());
 
     return response;
   }
