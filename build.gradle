@@ -58,6 +58,7 @@ dependencies {
     compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
     compile "com.zaxxer:HikariCP:2.7.7"
     compile "mysql:mysql-connector-java:5.1.45"
+
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
     compile "org.activiti:activiti-engine:6.0.0"
 
