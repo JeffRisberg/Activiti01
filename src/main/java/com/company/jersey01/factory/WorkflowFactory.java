@@ -1,10 +1,7 @@
 package com.company.jersey01.factory;
 
-import com.aisera.connector.beans.workflow.WorkflowDefinition;
-import com.aisera.connector.framework.core1.controllers.WorkflowController;
-import com.aisera.conversation.workflow.ContextualWorkflowDriverImpl;
-import com.aisera.conversation.workflow.WorkflowDriver;
-import com.aisera.conversation.workflow.impl.WorkflowDriverImpl;
+import com.company.jersey01.ContextualWorkflowDriverImpl;
+import com.company.jersey01.WorkflowDriver;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.*;
@@ -67,6 +64,7 @@ public class WorkflowFactory {
   }
 
   public static void addDeployment(@NonNull String tenantId, @NonNull String processDefinitionKey) {
+    /*
     // Lookup the definition
     WorkflowDefinition workflowDefinition = getWorkflowController().getWorkflowDefinition(processDefinitionKey);
     if(workflowDefinition == null) {
@@ -77,6 +75,7 @@ public class WorkflowFactory {
     log.info("Adding Process Definition: {} for tenant: {}", workflowDefinition.getDefinition(), tenantId);
     repositoryService.createDeployment().addClasspathResource(workflowDefinition.getDefinition()).tenantId(tenantId).deploy();
     log.info("Process Definition: {} successfully deployed for tenant: {}", workflowDefinition.getDefinition(), tenantId);
+    */
   }
 
   public static ProcessEngine getProcessEngine() {
