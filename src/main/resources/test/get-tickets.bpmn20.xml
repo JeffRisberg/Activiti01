@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+  <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:activiti="http://activiti.org/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema"
+               expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef"
+               xmlns:modeler="http://activiti.com/modeler" modeler:version="1.0ev" modeler:exportDateTime="20170708124328"
+               modeler:modelId="1005826" modeler:modelVersion="1" modeler:modelLastUpdated="1499514116825">
+
+  <process id="GetTickets" name="Get Tickets" isExecutable="true">
+
+    <startEvent id="startEvent" name="start" activiti:initiator="user">
+      <extensionElements>
+        <activiti:executionListener class="com.aisera.conversation.workflow.event.StartEventListener" event="start"/>
+      </extensionElements>
+    </startEvent>
+
+    <userTask id="get_ticket_specs" name="Get Ticket Specs" activiti:initiator="user">
+      <documentation>
+        Enter Ticket Specifications
+      </documentation>
+
+      <extensionElements>
+        <activiti:formProperty
+          id="status" name="Enter ticket Status: " value="Status" type="string" required="false"/>
+        <activiti:formProperty
+          id="period" name="Enter ticket Period (in days): " value="Period" type="long" required="false"/>
+      </extensionElements>
+    </userTask>
+
+    <serviceTask id="check_user_input" name="Check if specs are valid" activiti:class="com.aisera.conversation.workflow.action.tickets.GetTicketsValidationTask">
+    </serviceTask>
+
+    <serviceTask id="get_tickets" name="Get Tickets"
+                 activiti:class="com.aisera.conversation.workflow.action.tickets.GetTicketsTask">
+    </serviceTask>
+
+    <!--branching-->
+    <exclusiveGateway id="branchInputComplete"/>
+
+    <!--control flow-->
+    <sequenceFlow id="flow1" name="flow1" sourceRef="startEvent" targetRef="get_ticket_specs">
+    </sequenceFlow>
+
+    <sequenceFlow id="flow2" name="flow2" sourceRef="get_ticket_specs" targetRef="check_user_input">
+    </sequenceFlow>
+
+    <sequenceFlow id="flow2.1" name="flow2.2" sourceRef="check_user_input" targetRef="branchInputComplete">
+    </sequenceFlow>
+
+    <sequenceFlow id="flow2.3" name="flow2.3" sourceRef="branchInputComplete" targetRef="get_ticket_specs">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${userInputValid == 'false'}]]></conditionExpression>
+    </sequenceFlow>
+
+    <sequenceFlow id="flow2.4" name="flow2.4" sourceRef="branchInputComplete" targetRef="get_tickets">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${userInputValid == 'true'}]]></conditionExpression>
+    </sequenceFlow>
+
+    <sequenceFlow id="flow3" name="flow3" sourceRef="get_tickets" targetRef="EndEvent">
+    </sequenceFlow>
+
+    <endEvent id="EndEvent" name="End Event">
+      <extensionElements>
+        <activiti:executionListener class="com.aisera.conversation.workflow.event.EndEventListener" event="end"/>
+      </extensionElements>
+    </endEvent>
+
+  </process>
+</definitions>
