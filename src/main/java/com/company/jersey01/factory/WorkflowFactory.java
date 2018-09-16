@@ -2,6 +2,7 @@ package com.company.jersey01.factory;
 
 import com.company.jersey01.ContextualWorkflowDriverImpl;
 import com.company.jersey01.WorkflowDriver;
+import com.company.jersey01.models.WorkflowDefinition;
 import com.company.jersey01.services.WorkflowService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,8 @@ public class WorkflowFactory {
   // Workflow Driver
   private static WorkflowDriver workflowDriver;
 
-   // Workflow Controller
-  private static WorkflowService workflowController;
+  // Workflow Controller
+  private static WorkflowService workflowService;
 
   static {
     log.info("Initializing ProcessEngine Creation...");
@@ -38,20 +39,21 @@ public class WorkflowFactory {
 
     // Create workflow driver
     log.info("Building WorkflowDriver...");
-     workflowDriver = new ContextualWorkflowDriverImpl(runtimeService, taskService, formService, historyService, repositoryService);
+    workflowDriver = new ContextualWorkflowDriverImpl(runtimeService, taskService, formService, historyService, repositoryService);
 //    workflowDriver = new WorkflowDriverImpl(runtimeService, taskService, formService, historyService, repositoryService);
     log.info("WorkflowDriver initialized.");
   }
 
-  public static WorkflowService getWorkflowController() {
-    if(workflowController == null)
-      workflowController = new WorkflowService();
+  public static WorkflowService getWorkflowService() {
+    if (workflowService == null)
+      workflowService = new WorkflowService();
 
-    return workflowController;
+    return workflowService;
   }
 
   /**
    * Delete a deployment.
+   *
    * @param deploymentId
    */
   public static void deleteDeployment(@NonNull String deploymentId) {
@@ -59,16 +61,15 @@ public class WorkflowFactory {
       log.info("Deleting Deployment: {}", deploymentId);
       repositoryService.deleteDeployment(deploymentId, true);
       log.info("Deployment successfully deleted.");
-    } catch(Exception x) {
+    } catch (Exception x) {
       log.error("Error deleting deployment.", x);
     }
   }
 
   public static void addDeployment(@NonNull String tenantId, @NonNull String processDefinitionKey) {
-    /*
     // Lookup the definition
-    WorkflowDefinition workflowDefinition = getWorkflowController().getWorkflowDefinition(processDefinitionKey);
-    if(workflowDefinition == null) {
+    WorkflowDefinition workflowDefinition = getWorkflowService().getWorkflowDefinition(processDefinitionKey);
+    if (workflowDefinition == null) {
       log.error("Workflow Definition not available: {}. Workflow not deployed.", processDefinitionKey);
       return;
     }
@@ -76,7 +77,6 @@ public class WorkflowFactory {
     log.info("Adding Process Definition: {} for tenant: {}", workflowDefinition.getDefinition(), tenantId);
     repositoryService.createDeployment().addClasspathResource(workflowDefinition.getDefinition()).tenantId(tenantId).deploy();
     log.info("Process Definition: {} successfully deployed for tenant: {}", workflowDefinition.getDefinition(), tenantId);
-    */
   }
 
   public static ProcessEngine getProcessEngine() {

@@ -42,8 +42,8 @@ public class Workflow extends AbstractTenantDatabaseItem {
 
     @Builder
     public Workflow(Long id, Timestamp createdAt, Timestamp updatedAt, /*Tenant tenant,*/ String tenantId,
-                    /*TenantUser tenantUser,*/ long tenantUserId, String name, String description,
-                    /*OAuth2Provider oAuth2Provider,*/ Long oAuth2ProviderId, WorkflowDefinition workflowDefinition,
+            /*TenantUser tenantUser,*/ long tenantUserId, String name, String description,
+            /*OAuth2Provider oAuth2Provider,*/ Long oAuth2ProviderId, WorkflowDefinition workflowDefinition,
                     Long workflowDefinitionId) {
         super(id, createdAt, updatedAt, /*tenant,*/ tenantId, /*tenantUser,*/ tenantUserId);
         this.name = name;
